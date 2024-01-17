@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mehndi Book</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">search</string>
+    <string name="spring_outing">Spring outing</string>
+    <string name="teddy">Teddy</string>
+    <string name="toy">Toy</string>
+    <string name="show_moe">Show MOE</string>
+    <string name="dogs_don_t_like_to_eat">Dogs don\'t like to eat</string>
+    <string name="top_search">Top Search</string>
+    <string name="hot_circle">Hot Circle</string>
+    <string name="more">More</string>
+    <string name="right_hand">mehnditype</string>
+    <string name="trending">Trending</string>
+    <string name="your_post_is_trending_in_the_hot_section">Your Post is Trending in the hot Section</string>
+    <string name="_9_56_am">9.56 AM</string>
+    <string name="data">Data</string>
+    <string name="hand">Hand....</string>
+    <string name="favourite">Favourite</string>
+</resources>

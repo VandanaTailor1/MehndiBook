@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184154310443",
+    "project_id": "mehndibook-5fdf2",
+    "storage_bucket": "mehndibook-5fdf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184154310443:android:da16366f8fc89fc83a676e",
+        "android_client_info": {
+          "package_name": "com.example.mehndibook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQWhQwVr8-bv-E0l3PMc-tiVDw2uQl35w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
