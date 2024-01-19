@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LocationTrack</string>
+    <string name="name">enter your name</string>
+    <string name="contact">enter contact number</string>
+    <string name="heading">Save Data in Firebase</string>
+
 </resources>
