@@ -3,7 +3,6 @@ package com.example.locationtrack;
 public class Model {
       private String name;
       private String contact;
-
     public String getName() {
         return name;
     }

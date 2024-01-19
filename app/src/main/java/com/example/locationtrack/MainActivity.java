@@ -26,8 +26,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.locationtrack.databinding.ActivityMainBinding;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -42,6 +45,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,16 +65,19 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     Model model = new Model();
-    DatabaseReference ref;
+    ListDataAdapter listDataAdapter;
+    DatabaseReference ref,dreff;
+    FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        FirebaseApp.initializeApp(this);
+        dreff = FirebaseDatabase.getInstance().getReference().child("Model");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-
         binding.button.setOnClickListener(v -> {
             String name = binding.name.getText().toString();
             String contact = binding.contact.getText().toString();
@@ -82,7 +89,31 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        showListData();
 
+    }
+
+    private void showListData() {
+ LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
+   binding.recycle.setLayoutManager(linearLayoutManager);
+        FirebaseRecyclerOptions<Model> options
+                = new FirebaseRecyclerOptions.Builder<Model>()
+                .setQuery(dreff, Model.class)
+                .build();
+        listDataAdapter=new ListDataAdapter(options);
+        binding.recycle.setAdapter(listDataAdapter);
+    }
+
+    @Override protected void onStart()
+    {
+        super.onStart();
+        listDataAdapter.startListening();
+    }
+
+    @Override protected void onStop()
+    {
+        super.onStop();
+        listDataAdapter.stopListening();
     }
 
     private void addDataOnFireBase(String name, String contact) {
