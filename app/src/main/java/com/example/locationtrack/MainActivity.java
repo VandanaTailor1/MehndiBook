@@ -1,13 +1,11 @@
 package com.example.locationtrack;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,44 +18,31 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.locationtrack.databinding.ActivityMainBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemClickListner {
     private static final int PERMISSION_ID = 1;
     private static final String channelId = "i.apps.notifications";
     private static final String description = "Test notification";
@@ -90,7 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
         showListData();
-
+       binding.fireStore.setOnClickListener(v -> {
+           Intent intent=new Intent(this, FirestoreActivity.class);
+           startActivity(intent);
+       });
     }
 
     private void showListData() {
@@ -100,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(dreff, Model.class)
                 .build();
-        listDataAdapter=new ListDataAdapter(options);
+        listDataAdapter=new ListDataAdapter(options,this,this);
         binding.recycle.setAdapter(listDataAdapter);
     }
 
@@ -120,22 +108,20 @@ public class MainActivity extends AppCompatActivity {
         model.setName(name);
         model.setContact(contact);
 
-        FirebaseDatabase.getInstance().getReference().child("Model").push().setValue(model).
-                addOnSuccessListener(new OnSuccessListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child("Model").push().setValue(model)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(MainActivity.this, "Add successFully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Add successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnCanceledListener(new OnCanceledListener() {
+                    @Override
+                    public void onCanceled() {
+                        Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-        FirebaseDatabase.getInstance().getReference().child("Model").push().setValue(model).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
-
-
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         if (checkPermissions()) {
@@ -264,5 +250,10 @@ public class MainActivity extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
+    }
+
+    @Override
+    public void onItemClick(int position, String type) {
+
     }
 }
