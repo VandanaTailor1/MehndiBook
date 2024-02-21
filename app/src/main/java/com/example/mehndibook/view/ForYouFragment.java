@@ -48,7 +48,6 @@ public class ForYouFragment extends Fragment implements RecycleItemClick {
          attachTrendingDesign();
         attachNewDesign();
 //        ApiCall();
-
               return v;
     }
     private void ApiCall() {
