@@ -74,7 +74,7 @@
        android:layout_alignParentBottom="true"
        android:layout_marginHorizontal="10dp"
        />
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -82,10 +82,13 @@
         android:layout_below="@id/linear"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_back"
         android:orientation="vertical"
         android:padding="10dp">
-
         <TextView
             android:id="@+id/head"
             android:layout_width="wrap_content"
@@ -121,7 +124,22 @@
             android:text="Longitude:"
             android:textColor="@color/black"
             android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/fbSave"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="25dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:background="@color/purple"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="Save"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="20dp" />-->
+
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
     <TextView
         android:id="@+id/fireStore"
         android:layout_width="match_parent"

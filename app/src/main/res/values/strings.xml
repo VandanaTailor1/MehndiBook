@@ -3,5 +3,8 @@
     <string name="name">enter your name</string>
     <string name="contact">enter contact number</string>
     <string name="heading">Save Data in Firebase</string>
+    <string name="facebook_app_id">413270247853324</string>
+    <string name="fb_login_protocol_scheme">fb413270247853324</string>
+    <string name="facebook_client_token">08799ac534de1b0604f185b03ff84d70</string>
 
 </resources>

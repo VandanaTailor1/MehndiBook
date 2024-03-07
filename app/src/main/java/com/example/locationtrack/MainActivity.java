@@ -25,6 +25,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.locationtrack.databinding.ActivityMainBinding;
+
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -36,6 +37,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListner 
     ListDataAdapter listDataAdapter;
     DatabaseReference ref,dreff;
     FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements ItemClickListner 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         FirebaseApp.initializeApp(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
         dreff = FirebaseDatabase.getInstance().getReference().child("Model");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
@@ -164,8 +174,8 @@ public class MainActivity extends AppCompatActivity implements ItemClickListner 
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+     //   builder.setContentIntent(contentIntent);
 
         notificationManager.notify(1, builder.build());
     }
@@ -256,4 +266,13 @@ public class MainActivity extends AppCompatActivity implements ItemClickListner 
     public void onItemClick(int position, String type) {
 
     }
+
+    public void initFbLogin(){
+//        binding.fbSave.setOnClickListener(v -> {
+//            faceBookLogin();
+//        });
+    }
+
+
+
 }
